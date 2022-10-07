@@ -1,0 +1,38 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: JavaToolInstaller@0
+  inputs:
+    versionSpec: '11'
+    jdkArchitectureOption: 'x64'
+    jdkSourceOption: 'PreInstalled'
+- task: Maven@3
+  inputs:
+    mavenPomFile: 'pom.xml'
+    mavenOptions: '-Xmx3072m -Dmaven.test.skip=true'
+    javaHomeOption: 'JDKVersion'
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: false
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    goals: 'package'
+- script: |
+    mkdir output
+    mv target output/
+    mv Dockerfile output/
+    mv deployment.yaml output/
+  displayName: Create output
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: 'output/' 
+    includeRootFolder: false 
+    archiveType: 'tar'
+    tarCompression: 'gz'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).tar.gz' 
+    replaceExistingArchive: true 
+
+- publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).tar.gz
+  artifact: App

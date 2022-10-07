@@ -1,0 +1,84 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fgl-middleware-order-svc
+  labels:
+    app: fgl-middleware-order
+  annotations:
+    service.beta.kubernetes.io/oci-load-balancer-shape: 10Mbps
+spec:
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+  selector:
+    tier: fgl-srvc
+    app: fgl-middleware-order
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fgl-middleware-order
+  labels:
+    app: fgl-middleware-order
+spec:
+  selector:
+    matchLabels:
+      app: fgl-middleware-order
+      tier: fgl-srvc
+  replicas: 1 
+  template:
+    metadata:
+      labels:
+        app: fgl-middleware-order
+        tier: fgl-srvc
+    spec:
+      containers:
+      - name: fgl-middleware-order
+        image: iad.ocir.io/idloqob6sog2/frigelar-dev/fgl_middleware_order:latest
+        ports:
+        - containerPort: 8080
+        env:
+          - name: LOG_LEVEL
+            value: "TRACE"
+          - name: CLIENT_OCC_URL
+            value: "http://fgl-srvc-integration-occ-svc-hml.frigelar.com.br:8080"
+          - name: CLIENT_OCC_NAME
+            value: "IntegracaoOcc"
+          - name: SALES_INTEGRATION_ORDER_URL
+            value: "https://fgl-svc-order-dev.azurewebsites.net/api/v1/petra/salesintegrationorder"
+          - name: URL_DOWN_ORDER
+            value: "http://fgl-srvc-order-svc-hml.frigelar.com.br:8080/api/downOrder"
+          - name: URL_LOW_ORDER
+            value: "http://fgl-srvc-order-svc-hml.frigelar.com.br:8080/api/v1/lowOrder"
+          - name: URL_PAYMENT_PARAMETER
+            value: "http://fgl-srvc-order-svc-hml.frigelar.com.br:8080/api/v1/paymentParameter"
+          - name: URL_PARAMETER_CLIENT
+            value: "http://fgl-srvc-order-svc-hml.frigelar.com.br:8080/api/v1/parametersClient/parametersClient"
+          - name: URL_SRVC_ORDER
+            value: "http://fgl-srvc-order-svc-hml.frigelar.com.br:8080"
+          - name: URL_STATUS
+            value: "https://api-hml.frigelar.com.br/change-order-status/order-status/update"
+          - name: URL_STATUS_SEND
+            value: "http://fgl-srvc-order-svc-hml.frigelar.com.br:8080/api/v1/srvcOrder/statusUpdate"
+          - name: URL_BRANCH_CLIENT
+            value: "http://fgl-srvc-branch-svc-hml.frigelar.com.br:8080"
+          - name: SALES_INTEGRATION_ORDER_AUTHORIZATION
+            valueFrom:
+              secretKeyRef:
+                name: sales-integration-order-auth-secret
+                key: auth
+        resources:
+          limits: 
+            cpu: "2"
+            memory: "2Gi"
+          requests:
+            cpu: "0.5"
+            memory: "200Mi"
+      imagePullSecrets:
+      - name: ocirsecret
+
+
+

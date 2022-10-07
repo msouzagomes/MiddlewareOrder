@@ -1,0 +1,36 @@
+# Spring
+spring:
+  logging:
+    level:
+      org:
+        springframework:
+          ws: ${LOG_LEVEL:TRACE}
+          
+  occ:
+    baseurl: ${CLIENT_OCC_URL:http://fgl-srvc-integration-occ-svc-hml.frigelar.com.br:8080}
+    name: ${CLIENT_OCC_NAME:IntegracaoOcc}
+
+  frigelar:
+    salesintegrationorder:
+      authorization: ${SALES_INTEGRATION_ORDER_AUTHORIZATION:Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzMjUzOTlkMi1jMWVmLTQ4ZjAtOWIxMS1iNTU4M2RkYzRhMmEiLCJhcHBJZCI6IjQxNGYzMWU4LTUyZDQtNDA3Yy1iZmNhLTYxZDZhZDUzMDUzOSIsImN1c3RvbWVyRXJwSWQiOiI1NzYxNjUiLCJyZWdpb25JZCI6IjEiLCJqdGkiOiJlMzA2NmFlYy1kZmRhLTRiMWYtOWIxYi0zYWQxODk1YzM1NDIiLCJpYXQiOiIxNjE0NjAyMjAxIiwiZXhwIjoiMTYyMjQwMjIwMSIsImF1ZCI6IkZyaWdlbGFyIiwiaXNzIjoiRnJpZ2VsYXIifQ.iCtfGkfHFtSb_fr3GrcPKU93aKoaH_4Ta-pkA-2ATTb8oC64aVYOtWDT6YO-618MnhXkFf3ZmihYAd74Ue4lHg} 
+      url: ${SALES_INTEGRATION_ORDER_URL:/api/v1/petra/salesintegrationorder}
+    downOrder:
+      url: ${URL_DOWN_ORDER:http://.com.br:8080/api/downOrder}
+    lowOrder:
+      url: ${URL_LOW_ORDER:http://.com.br:8080/api/v1/lowOrder}
+    paymentParameter:
+      url: ${URL_PAYMENT_PARAMETER:http://.com.br:8080/api/v1/paymentParameter}
+    parametersClient:
+      url: ${URL_PARAMETER_CLIENT:http://:8080/api/v1/parametersClient/parametersClient}
+
+  srvcOrder:
+    baseurl: ${URL_SRVC_ORDER:http://.com.br:8080}
+
+  urlstatus:
+    baseurl: ${URL_STATUS:https://a/change-order-status/order-status/update}
+
+  urlstatusSend:
+    baseurl: ${URL_STATUS_SEND:http://f:8080/api/v1/srvcOrder/statusUpdate}
+
+  branchClient:
+    baseurl: ${URL_BRANCH_CLIENT:http://f:8080}

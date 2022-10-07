@@ -1,0 +1,37 @@
+# Spring
+spring:
+  boot:
+    admin:
+      client:
+        url: http://localhost:8081
+  logging:
+    level:
+      org:
+        springframework:
+          ws: TRACE
+
+  occ:
+    name: IntegracaoOcc
+    baseurl: https://fgl-srvc-integration-occ-dot-cerc-homolog.appspot.com
+
+  frigelar:
+    salesintegrationorder:
+      authorization: "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzMjUzOTlkMi1jMWVmLTQ4ZjAtOWIxMS1iNTU4M2RkYzRhMmEiLCJhcHBJZCI6IjQxNGYzMWU4LTUyZDQtNDA3Yy1iZmNhLTYxZDZhZDUzMDUzOSIsImN1c3RvbWVyRXJwSWQiOiI1NzYxNjUiLCJyZWdpb25JZCI6IjEiLCJqdGkiOiJlM2RhMTM0Mi04YWEyLTQ5NDQtOGU1Ni02MzA5ODhiMjQwOWEiLCJpYXQiOiIxNjA2NzQwNDM4IiwiZXhwIjoiMTYxNDU0MDQzOCIsImF1ZCI6IkZyaWdlbGFyIiwiaXNzIjoiRnJpZ2VsYXIifQ.kc1ULgOnfwgSr-j8myocaO5BOjC_fjFtCVaWeSvud1kfUWR1Li9ei6MWzgMgTRSEERYr_EjJy9ubL2VykdPI5g"
+      url: https://fgl-svc-order-dev.azurewebsites.net/api/v1/petra/salesintegrationorder
+    downOrder:
+      url: https://fgl-srvc-order-dot-cerc-homolog.appspot.com/api/downOrder
+    lowOrder:
+      url: https://fgl-srvc-order-dot-cerc-homolog.appspot.com/api/v1/lowOrder
+    paymentParameter:
+      url: https://fgl-srvc-order-dot-cerc-homolog.appspot.com/api/v1/paymentParameter
+    parametersClient:
+      url: https://fgl-srvc-order-dot-cerc-homolog.appspot.com/api/v1/parametersClient/parametersClient
+
+  srvcOrder:
+    baseurl: https://fgl-srvc-order-dot-cerc-homolog.appspot.com
+
+  urlstatus:
+    baseurl: https://api-hml.frigelar.com.br/change-order-status/order-status/update
+
+  urlstatusSend:
+    baseurl: https://fgl-srvc-order-dot-cerc-homolog.appspot.com/api/v1/srvcOrder/statusUpdate

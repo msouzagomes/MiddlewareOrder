@@ -1,0 +1,3 @@
+#!/bin/bash
+export GOOGLE_APPLICATION_CREDENTIALS="./access.json"
+echo $GOOGLE_APPLICATION_CREDENTIALS
